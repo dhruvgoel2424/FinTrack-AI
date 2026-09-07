@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FinTrack AI — Budget Planner</title>
+  <meta name="description" content="Set and manage your monthly budget for college expenses like food, travel, books and more.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="layout">
+  <aside class="sidebar"></aside>
+
+  <main class="main-content">
+
+    <div class="top-header fade-in">
+      <div>
+        <h1>💼 Budget Planner</h1>
+        <p>Manage your monthly budget limits and track overspending</p>
+      </div>
+      <div class="header-right">
+        <button class="btn btn-primary" onclick="openModal('budget-modal')">
+          ✏️ Edit Limits
+        </button>
+      </div>
+    </div>
+
+    <!-- BUDGET OVERVIEW CARDS -->
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-bottom:25px">
+
+      <div class="panel" style="text-align:center">
+        <p style="color:var(--text-muted); font-size:13px; margin-bottom:10px">💰 Total Budget</p>
+        <h2 style="font-size:30px; color:var(--blue)" id="total-budget">₹6,300</h2>
+        <p style="color:var(--text-dim); font-size:12px; margin-top:6px">Monthly limit set</p>
+      </div>
+
+      <div class="panel" style="text-align:center">
+        <p style="color:var(--text-muted); font-size:13px; margin-bottom:10px">💸 Total Spent</p>
+        <h2 style="font-size:30px; color:var(--red)" id="total-spent">₹2,139</h2>
+        <p style="color:var(--text-dim); font-size:12px; margin-top:6px">34% of budget used</p>
+      </div>
+
+      <div class="panel" style="text-align:center">
+        <p style="color:var(--text-muted); font-size:13px; margin-bottom:10px">✅ Remaining</p>
+        <h2 style="font-size:30px; color:var(--green)" id="total-remaining">₹4,161</h2>
+        <p style="color:var(--text-dim); font-size:12px; margin-top:6px">Budget available</p>
+      </div>
+
+    </div>
+
+    <!-- BUDGET BARS + TIPS -->
+    <div class="budget-grid">
+
+      <!-- BUDGET BARS -->
+      <div class="panel">
+        <div class="panel-header">
+          <h3>📊 Budget by Category</h3>
+          <span style="font-size:12px; color:var(--text-muted)">September 2024</span>
+        </div>
+        <div id="budget-bars">
+          <!-- Rendered by JS -->
+        </div>
+      </div>
+
+      <!-- BUDGET TIPS -->
+      <div class="panel">
+        <div class="panel-header">
+          <h3>💡 Budget Tips</h3>
+        </div>
+
+        <div class="tip-card">
+          <div class="tip-icon">🍔</div>
+          <div>
+            <div class="tip-label">FOOD BUDGET</div>
+            <div class="tip-text">Your food budget is ₹2,000/month. That's ₹67/day — try to stay within ₹60 to save extra!</div>
+          </div>
+        </div>
+
+        <div class="tip-card">
+          <div class="tip-icon">📚</div>
+          <div>
+            <div class="tip-label">EDUCATION</div>
+            <div class="tip-text">Books & stationery budget: ₹1,500. Buy secondhand books from seniors to save 50%!</div>
+          </div>
+        </div>
+
+        <div class="tip-card">
+          <div class="tip-icon">🎮</div>
+          <div>
+            <div class="tip-label">FUN SPENDING</div>
+            <div class="tip-text">Fun budget: ₹800/month. Gaming cafe + movies. Plan ahead to stay on track!</div>
+          </div>
+        </div>
+
+        <div class="tip-card">
+          <div class="tip-icon">📺</div>
+          <div>
+            <div class="tip-label">SUBSCRIPTIONS</div>
+            <div class="tip-text">Subscriptions: ₹500. Share Netflix/Spotify with hostel friends to halve the cost!</div>
+          </div>
+        </div>
+
+        <div style="margin-top:16px">
+          <button class="btn btn-primary" style="width:100%; justify-content:center" onclick="openModal('budget-modal')">
+            ✏️ Update Budget Limits
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- SPENDING TIPS TABLE -->
+    <div class="panel" style="margin-top:20px">
+      <div class="panel-header">
+        <h3>🧠 AI-Powered Budget Advice</h3>
+      </div>
+      <table class="txn-table">
+        <thead>
+          <tr>
+            <th>Category</th>
+            <th>Recommended Limit</th>
+            <th>Current Limit</th>
+            <th>Status</th>
+            <th>AI Suggestion</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="badge badge-food">🍔 Food</span></td>
+            <td style="color:var(--green)">₹1,500</td>
+            <td>₹2,000</td>
+            <td><span class="badge badge-food">On Track</span></td>
+            <td style="font-size:12px; color:var(--text-muted)">Reduce Zomato orders to 2x/week</td>
+          </tr>
+          <tr>
+            <td><span class="badge badge-travel">🚌 Travel</span></td>
+            <td style="color:var(--green)">₹800</td>
+            <td>₹1,000</td>
+            <td><span class="badge badge-food">On Track</span></td>
+            <td style="font-size:12px; color:var(--text-muted)">Get a semester bus pass</td>
+          </tr>
+          <tr>
+            <td><span class="badge badge-edu">📚 Education</span></td>
+            <td style="color:var(--orange)">₹1,200</td>
+            <td>₹1,500</td>
+            <td><span class="badge badge-income">Good</span></td>
+            <td style="font-size:12px; color:var(--text-muted)">Buy secondhand books from seniors</td>
+          </tr>
+          <tr>
+            <td><span class="badge badge-fun">🎮 Fun</span></td>
+            <td style="color:var(--green)">₹600</td>
+            <td>₹800</td>
+            <td><span class="badge badge-food">On Track</span></td>
+            <td style="font-size:12px; color:var(--text-muted)">Play free games on college WiFi</td>
+          </tr>
+          <tr>
+            <td><span class="badge badge-sub">📺 Subscription</span></td>
+            <td style="color:var(--red)">₹300</td>
+            <td>₹500</td>
+            <td><span class="badge" style="background:rgba(245,158,11,0.15); color:var(--orange)">Reduce</span></td>
+            <td style="font-size:12px; color:var(--text-muted)">Share Netflix 3-way (₹133/month)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </main>
+</div>
+
+<!-- EDIT BUDGET MODAL -->
+<div class="modal-overlay" id="budget-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>✏️ Edit Budget Limits</h3>
+      <button class="modal-close" onclick="closeModal('budget-modal')">✕</button>
+    </div>
+    <form id="budget-form">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px">
+        <div class="form-group">
+          <label>🍔 Food (₹)</label>
+          <input type="number" id="budget-food" placeholder="2000">
+        </div>
+        <div class="form-group">
+          <label>🚌 Travel (₹)</label>
+          <input type="number" id="budget-travel" placeholder="1000">
+        </div>
+        <div class="form-group">
+          <label>📚 Education (₹)</label>
+          <input type="number" id="budget-education" placeholder="1500">
+        </div>
+        <div class="form-group">
+          <label>🎮 Fun (₹)</label>
+          <input type="number" id="budget-fun" placeholder="800">
+        </div>
+        <div class="form-group">
+          <label>📺 Subscription (₹)</label>
+          <input type="number" id="budget-subscription" placeholder="500">
+        </div>
+        <div class="form-group">
+          <label>💸 Other (₹)</label>
+          <input type="number" id="budget-other" placeholder="500">
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center; padding:13px">
+        💾 Save Budget Limits
+      </button>
+    </form>
+  </div>
+</div>
+
+<script src="script.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Update overview cards
+    const budgets = Store.get('budgets', {});
+    const totalBudget = Object.values(budgets).reduce((s, b) => s + b.limit, 0);
+    const totalSpent = Object.values(budgets).reduce((s, b) => s + b.spent, 0);
+    document.getElementById('total-budget').textContent = '₹' + totalBudget.toLocaleString('en-IN');
+    document.getElementById('total-spent').textContent = '₹' + totalSpent.toLocaleString('en-IN');
+    document.getElementById('total-remaining').textContent = '₹' + (totalBudget - totalSpent).toLocaleString('en-IN');
+
+    // Pre-fill budget modal
+    Object.entries(budgets).forEach(([cat, b]) => {
+      const el = document.getElementById('budget-' + cat);
+      if (el) el.value = b.limit;
+    });
+  });
+</script>
+
+</body>
+</html>
