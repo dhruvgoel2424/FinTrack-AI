@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FinTrack AI — AI Coach</title>
+  <meta name="description" content="Chat with your AI financial coach. Get personalized advice on budgeting, saving, and spending habits.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="layout">
+  <aside class="sidebar"></aside>
+
+  <main class="main-content">
+
+    <div class="top-header fade-in">
+      <div>
+        <h1>🤖 AI Coach</h1>
+        <p>Ask anything about your finances — I'm always here to help!</p>
+      </div>
+    </div>
+
+    <div class="chat-layout">
+
+      <!-- MAIN CHAT -->
+      <div class="chat-main">
+
+        <div class="chat-header">
+          <div class="ai-avatar">🤖</div>
+          <div>
+            <div style="font-weight:600; font-size:15px">FinTrack AI Coach</div>
+            <div class="ai-status">Online · Ready to help</div>
+          </div>
+        </div>
+
+        <div class="chat-messages" id="chat-messages">
+
+          <!-- Welcome message -->
+          <div class="msg bot-msg fade-in">
+            <div class="msg-avatar bot-avatar">🤖</div>
+            <div>
+              <div class="msg-bubble">
+                👋 Hey! I'm your AI Financial Coach. I know your finances and can help you:<br><br>
+                📊 Analyze your spending<br>
+                💰 Create saving strategies<br>
+                🎯 Help you reach your goals faster<br>
+                📅 Plan your exam-week budget<br><br>
+                What would you like help with today?
+              </div>
+              <div class="msg-time">Just now</div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="chat-input-area">
+          <textarea class="chat-input" id="chat-input" placeholder="Ask me anything... e.g. 'Can I afford pizza today?'" rows="1"></textarea>
+          <button class="chat-send-btn" onclick="sendMessage()" id="send-btn" title="Send">➤</button>
+        </div>
+
+      </div>
+
+      <!-- SIDEBAR -->
+      <div class="chat-sidebar">
+
+        <!-- QUICK PROMPTS -->
+        <div class="quick-prompts">
+          <div class="panel-header" style="margin-bottom:12px">
+            <h3>⚡ Quick Questions</h3>
+          </div>
+          <button class="quick-prompt-btn" onclick="sendQuickPrompt('Can I afford pizza today?')">🍕 Can I afford pizza today?</button>
+          <button class="quick-prompt-btn" onclick="sendQuickPrompt('How is my budget this month?')">📊 How is my budget?</button>
+          <button class="quick-prompt-btn" onclick="sendQuickPrompt('How can I save more money?')">💰 How to save more?</button>
+          <button class="quick-prompt-btn" onclick="sendQuickPrompt('What are my savings goals status?')">🎯 Goals progress?</button>
+          <button class="quick-prompt-btn" onclick="sendQuickPrompt('Analyze my subscription spending')">📺 Subscription analysis</button>
+          <button class="quick-prompt-btn" onclick="sendQuickPrompt('I have exam week coming up, help me plan budget')">📚 Exam week budget plan</button>
+          <button class="quick-prompt-btn" onclick="sendQuickPrompt('How much am I spending on travel?')">🚌 Travel spending?</button>
+          <button class="quick-prompt-btn" onclick="sendQuickPrompt('Can I order food tonight?')">🍔 Can I order food tonight?</button>
+        </div>
+
+        <!-- FINANCIAL SUMMARY -->
+        <div class="panel">
+          <div class="panel-header" style="margin-bottom:14px">
+            <h3>📋 My Snapshot</h3>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:10px" id="ai-snapshot">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+</div>
+
+<script src="script.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const stats = getStats();
+    const goals = Store.get('goals', []);
+    const snapshot = document.getElementById('ai-snapshot');
+    if (snapshot) {
+      snapshot.innerHTML = `
+        <div style="display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--card-border)">
+          <span style="font-size:13px; color:var(--text-muted)">💰 Income</span>
+          <span style="font-size:13px; font-weight:600; color:var(--green)">₹${stats.income.toLocaleString('en-IN')}</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--card-border)">
+          <span style="font-size:13px; color:var(--text-muted)">💸 Spent</span>
+          <span style="font-size:13px; font-weight:600; color:var(--red)">₹${stats.expense.toLocaleString('en-IN')}</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--card-border)">
+          <span style="font-size:13px; color:var(--text-muted)">🏦 Balance</span>
+          <span style="font-size:13px; font-weight:600; color:var(--blue)">₹${stats.balance.toLocaleString('en-IN')}</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--card-border)">
+          <span style="font-size:13px; color:var(--text-muted)">⭐ Score</span>
+          <span style="font-size:13px; font-weight:600; color:var(--orange)">${stats.score}/100</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; padding:8px 0">
+          <span style="font-size:13px; color:var(--text-muted)">🎯 Goals</span>
+          <span style="font-size:13px; font-weight:600; color:var(--purple)">${goals.length} active</span>
+        </div>
+      `;
+    }
+  });
+</script>
+
+</body>
+</html>
