@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FinTrack AI — Student Finance Coach</title>
+  <meta name="description" content="FinTrack AI – Premium AI-powered student financial coach. Track your pocket money, expenses, goals, and budget with smart AI insights.">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<div class="layout">
+
+  <!-- SIDEBAR (rendered by JS) -->
+  <aside class="sidebar"></aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+
+    <!-- TOP HEADER -->
+    <div class="top-header fade-in">
+      <div>
+        <h1 id="welcome-name">Hello, Dhruv 👋</h1>
+        <p>Your AI Personal Financial Coach · September 2024</p>
+      </div>
+      <div class="header-right">
+        <div class="month-badge">📅 September 2024</div>
+        <div class="notification-btn" title="Notifications">
+          🔔
+          <span class="notif-dot"></span>
+        </div>
+        <button class="btn btn-primary" onclick="openModal('add-txn-modal')">
+          + Add Expense
+        </button>
+      </div>
+    </div>
+
+    <!-- STAT CARDS -->
+    <div class="stats-grid">
+      <div class="stat-card income">
+        <div class="stat-card-top">
+          <p>Pocket Money</p>
+          <div class="stat-icon">💰</div>
+        </div>
+        <h2 id="stat-income">₹8,000</h2>
+        <div class="change up">↑ This month's income</div>
+        <div class="bottom-bar"></div>
+      </div>
+
+      <div class="stat-card expense">
+        <div class="stat-card-top">
+          <p>Total Spent</p>
+          <div class="stat-icon">💸</div>
+        </div>
+        <h2 id="stat-expense">₹3,450</h2>
+        <div class="change down">↓ 43% of pocket money</div>
+        <div class="bottom-bar"></div>
+      </div>
+
+      <div class="stat-card balance">
+        <div class="stat-card-top">
+          <p>Balance Left</p>
+          <div class="stat-icon">🏦</div>
+        </div>
+        <h2 id="stat-balance">₹4,550</h2>
+        <div class="change up">↑ 57% savings rate</div>
+        <div class="bottom-bar"></div>
+      </div>
+
+      <div class="stat-card score">
+        <div class="stat-card-top">
+          <p>Health Score</p>
+          <div class="stat-icon">⭐</div>
+        </div>
+        <h2 id="stat-score">88/100</h2>
+        <div class="change up">🔥 Excellent control!</div>
+        <div class="bottom-bar"></div>
+      </div>
+    </div>
+
+    <!-- MIDDLE SECTION -->
+    <div class="mid-grid">
+
+      <!-- SPENDING CHART -->
+      <div class="panel">
+        <div class="panel-header">
+          <h3>📊 Monthly Spending by Category</h3>
+          <a href="analytics.html" class="see-all">View Analytics →</a>
+        </div>
+        <div class="chart-box">
+          <canvas id="expenseChart"></canvas>
+        </div>
+      </div>
+
+      <!-- HEALTH PANEL -->
+      <div class="panel health-panel">
+        <div class="panel-header">
+          <h3>❤️ Financial Health</h3>
+        </div>
+        <div class="health-circle-wrap">
+          <div class="health-circle">
+            <div class="health-circle-val">88</div>
+          </div>
+        </div>
+        <div class="health-label">🔥 Excellent!</div>
+        <div class="progress-list">
+          <div class="progress-item">
+            <div class="progress-label"><span>Savings Rate</span><span>85%</span></div>
+            <div class="progress-track">
+              <div class="progress-fill" style="width:85%; background:var(--green)"></div>
+            </div>
+          </div>
+          <div class="progress-item">
+            <div class="progress-label"><span>Budget Discipline</span><span>78%</span></div>
+            <div class="progress-track">
+              <div class="progress-fill" style="width:78%; background:var(--blue)"></div>
+            </div>
+          </div>
+          <div class="progress-item">
+            <div class="progress-label"><span>Goal Progress</span><span>60%</span></div>
+            <div class="progress-track">
+              <div class="progress-fill" style="width:60%; background:var(--purple)"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- BOTTOM SECTION -->
+    <div class="bot-grid">
+
+      <!-- TRANSACTIONS -->
+      <div class="panel">
+        <div class="panel-header">
+          <h3>🧾 Recent Transactions</h3>
+          <a href="analytics.html" class="see-all">View All →</a>
+        </div>
+        <table class="txn-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Category</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody id="txn-tbody">
+            <!-- Rendered by JS -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- AI INSIGHTS -->
+      <div class="panel">
+        <div class="panel-header">
+          <h3>🤖 AI Insights</h3>
+          <a href="ai-chat.html" class="see-all">Ask AI →</a>
+        </div>
+
+        <div class="tip-card">
+          <div class="tip-icon">🍔</div>
+          <div>
+            <div class="tip-label">FOOD ALERT</div>
+            <div class="tip-text">Limit canteen orders to once daily. You can save ₹300/month by skipping late-night Zomato!</div>
+          </div>
+        </div>
+
+        <div class="tip-card">
+          <div class="tip-icon">🎯</div>
+          <div>
+            <div class="tip-label">GOAL TIP</div>
+            <div class="tip-text">You're 60% toward your Gaming Mouse goal! Save ₹180/day to hit it in 13 days.</div>
+          </div>
+        </div>
+
+        <div class="tip-card">
+          <div class="tip-icon">📺</div>
+          <div>
+            <div class="tip-label">SUBSCRIPTION</div>
+            <div class="tip-text">Netflix split (₹199) detected. Consider splitting 3-way to save ₹66/month.</div>
+          </div>
+        </div>
+
+        <div style="margin-top: 16px">
+          <a href="ai-chat.html" class="btn btn-primary" style="width:100%; justify-content:center; text-decoration:none;">
+            💬 Chat with AI Coach
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+</div>
+
+<!-- ADD TRANSACTION MODAL -->
+<div class="modal-overlay" id="add-txn-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>➕ Add Transaction</h3>
+      <button class="modal-close" onclick="closeModal('add-txn-modal')">✕</button>
+    </div>
+    <form id="txn-form">
+      <div class="form-group">
+        <label>Transaction Name</label>
+        <input type="text" id="txn-name-input" placeholder="e.g. Canteen Lunch, Bus ticket..." required>
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px">
+        <div class="form-group">
+          <label>Type</label>
+          <select id="txn-type">
+            <option value="expense">💸 Expense</option>
+            <option value="income">💰 Income</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Amount (₹)</label>
+          <input type="number" id="txn-amount" placeholder="0.00" min="0" step="0.01" required>
+        </div>
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px">
+        <div class="form-group">
+          <label>Category</label>
+          <select id="txn-category">
+            <option value="food">🍔 Food</option>
+            <option value="travel">🚌 Travel</option>
+            <option value="education">📚 Education</option>
+            <option value="fun">🎮 Fun</option>
+            <option value="subscription">📺 Subscription</option>
+            <option value="other">💸 Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Date</label>
+          <input type="date" id="txn-date" required>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center; padding:13px">
+        ✅ Add Transaction
+      </button>
+    </form>
+  </div>
+</div>
+
+<script src="script.js"></script>
+<script>
+  // Set today's date as default
+  document.getElementById('txn-date').valueAsDate = new Date();
+</script>
+
+</body>
+</html>
